@@ -32,7 +32,7 @@ export default {
 					case '/':
 						return new Response(JSON.stringify(request.cf), { status: 200 });
 					case `/${userID}?sub=clash`:
-						const clashSubYaml = await generateClashSub(userID)
+						const clashSubYaml = await generateClashSub(userID, request.headers.get('Host'))
 						console.log('c', clashSubYaml)
 						return new Response(clashSubYaml, {
 							status: 200,

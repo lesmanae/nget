@@ -1,12 +1,11 @@
 import { template } from './clash-sub-template'
 // import templateRender from 'lodash/template'
 
-const templateUrl = `https://raw.githubusercontent.com/chiui-li/Clash-Template-Config/master/clash-sub-template`
-const ipListUrl = `https://raw.githubusercontent.com/chiui-li/Clash-Template-Config/master/ip-list.txt`
+const templateUrl = `https://mirror.ghproxy.com/https://raw.githubusercontent.com/chiui-li/Clash-Template-Config/master/clash-sub-template`
+const ipListUrl = `https://mirror.ghproxy.com/https://raw.githubusercontent.com/chiui-li/Clash-Template-Config/master/ip-list.txt`
 
-const interpolate = /{{([\s\S]+?)}}/g
 
-function proxyYaml(name, location = 'unknown', ip, port = 443, userID) {
+function proxyYaml(name, location = 'unknown', ip, port = 443, userID, host) {
   return `
   - type: vless
     name: ${name}
@@ -21,7 +20,7 @@ function proxyYaml(name, location = 'unknown', ip, port = 443, userID) {
     ws-opts:
       path: "/?ed=2048"
       headers:
-        host: ${ip}
+        host: ${host}
       health-check:
         enable: true
         url: https://www.gstatic.com/generate_204
@@ -40,6 +39,8 @@ const groupNames = [
   'chatgpt',
   'netflix',
   'auto',
+  'vmess',
+  'WARP',
 ]
 
 function proxyGroupsYaml(name, ipList) {
@@ -50,7 +51,6 @@ function proxyGroupsYaml(name, ipList) {
     proxies:
       - DIRECT
       - REJECT
-      - auto
 ${nameList}
 `
 }
@@ -71,7 +71,7 @@ function parseCsv(csv = '') {
 /**
  * generateClashSub
  */
-export async function generateClashSub(userID) {
+export async function generateClashSub(userID, host) {
   const fetchTemplate = fetch(templateUrl).then(res => res.text())
   const fetchIpList = fetch(ipListUrl).then(res => res.text())
   const template = await fetchTemplate
@@ -79,7 +79,7 @@ export async function generateClashSub(userID) {
   template.replace('{{vps-server}}', '107.175.115.79')
   const ipList = parseCsv(ipCsv).slice(0, 8)
   return `
-${template.replace('{{proxy-list}}', ipList.map((ipMsg) => proxyYaml(ipMsg.name, ipMsg.location, ipMsg.ip, ipMsg.port, userID)).join('\n'))}
+${template.replace('{{vps-server}}', '107.175.115.79').replace('{uuid}', '195b1bf9-51d2-49bb-d5e1-7440af7eda05').replace('{{proxy-list}}', ipList.map((ipMsg) => proxyYaml(ipMsg.name, ipMsg.location, ipMsg.ip, ipMsg.port, userID, host)).join('\n'))}
 proxy-groups:
   ${groupNames.map(name => proxyGroupsYaml(name, ipList)).join('\n')}
 
