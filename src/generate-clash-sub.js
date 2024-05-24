@@ -21,16 +21,7 @@ function proxyYaml(name, location = 'unknown', ip, port = 443, userID, host) {
       path: "/?ed=2048"
       headers:
         host: ${host}
-      health-check:
-        enable: true
-        url: https://www.gstatic.com/generate_204
-        interval: 3000
-        timeout: 2000
-        lazy: true
-        expected-status: 204
-      override:
-        skip-cert-verify: true  
-  `
+`
 }
 
 const groupNames = [
