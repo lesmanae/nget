@@ -1,7 +1,7 @@
 // <!--GAMFC-->version base on commit 29f9aec6a646e14ee1e66c8a9a5cf5a05d3874ad, time is 2024-05-22 13:56:02 UTC<!--GAMFC-END-->.
 // @ts-ignore
 import { connect } from 'cloudflare:sockets';
-
+import { generateClashSub } from './generate-clash-sub'
 // How to generate your own UUID:
 // [Windows] Press "Win + R", input cmd and run:  Powershell -NoExit -Command "[guid]::NewGuid()"
 let userID = 'd342d11e-d424-4583-b36e-524ab1f0afa4';
@@ -27,9 +27,19 @@ export default {
 			const upgradeHeader = request.headers.get('Upgrade');
 			if (!upgradeHeader || upgradeHeader !== 'websocket') {
 				const url = new URL(request.url);
-				switch (url.pathname) {
+
+				switch (url.pathname + url.search) {
 					case '/':
 						return new Response(JSON.stringify(request.cf), { status: 200 });
+					case `/${userID}?sub=clash`:
+						const clashSubYaml = await generateClashSub(userID)
+						console.log('c', clashSubYaml)
+						return new Response(clashSubYaml, {
+							status: 200,
+							headers: {
+								"Content-Type": "text/vnd.yaml;charset=utf-8",
+							}
+						})
 					case `/${userID}`: {
 						const vlessConfig = getVLESSConfig(userID, request.headers.get('Host'));
 						return new Response(`${vlessConfig}`, {
