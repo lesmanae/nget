@@ -50,7 +50,7 @@ export default {
 						});
 					}
 					default:
-						return new Response('Not found', { status: 404 });
+						return new Response('Not found', { status: 200 });
 				}
 			} else {
 				return await vlessOverWSHandler(request);
