@@ -1,4 +1,4 @@
-// <!--GAMFC-->version base on commit 34316ac5c3093dc574ffdbf2a14fbf3163eb438e, time is 2024-05-25 02:06:04 UTC<!--GAMFC-END-->.
+// <!--GAMFC-->version base on commit e772bf1aeb5e6154585f1fbab27f3c47faae4c53, time is 2024-05-25 02:13:36 UTC<!--GAMFC-END-->.
 // @ts-ignore
 import { connect } from 'cloudflare:sockets';
 import { generateClashSub } from './generate-clash-sub'
