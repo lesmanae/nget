@@ -15,7 +15,7 @@ function proxyYaml(name, location = 'unknown', ip, port = 443, userID, host) {
     network: ws
     tls: true
     udp: false
-    sni: ${location}
+    sni: ${host}
     client-fingerprint: chrome
     ws-opts:
       path: "/?ed=2048"
