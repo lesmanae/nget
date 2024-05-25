@@ -9,7 +9,7 @@ function proxyYaml(name, location = 'unknown', ip, port = 443, userID, host) {
   return `
   - type: vless
     name: ${name}
-    server: ${ip}
+    server: ${host}
     port: ${port}
     uuid: ${userID}
     network: ws
