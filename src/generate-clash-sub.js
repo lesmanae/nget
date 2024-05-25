@@ -74,8 +74,6 @@ export async function generateClashSub(userID, host) {
   
 ${
 template
-// .replace('{{vps-server}}', '107.175.115.79')
-// .replace('{uuid}', '195b1bf9-51d2-49bb-d5e1-7440af7eda05')
 .replace('{{proxy-list}}', 
 ipList.map((ipMsg) => proxyYaml(ipMsg.name, ipMsg.location, ipMsg.ip, ipMsg.port, userID, host))
 .concat(`
