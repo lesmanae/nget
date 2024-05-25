@@ -1,4 +1,4 @@
-import { template } from './clash-sub-template'
+// import { template } from './clash-sub-template'
 // import templateRender from 'lodash/template'
 
 const templateUrl = `https://mirror.ghproxy.com/https://raw.githubusercontent.com/chiui-li/Clash-Template-Config/master/clash-sub-template`
@@ -9,7 +9,7 @@ function proxyYaml(name, location = 'unknown', ip, port = 443, userID, host) {
   return `
   - type: vless
     name: ${name}
-    server: ${host}
+    server: ${ip}
     port: ${port}
     uuid: ${userID}
     network: ws
