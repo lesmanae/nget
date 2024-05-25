@@ -31,7 +31,6 @@ const groupNames = [
   'netflix',
   'auto',
   'vmess',
-  'WARP',
 ]
 
 function proxyGroupsYaml(name, ipList) {
@@ -42,6 +41,8 @@ function proxyGroupsYaml(name, ipList) {
     proxies:
       - DIRECT
       - REJECT
+      - chiui
+      - WARP
 ${nameList}
 `
 }
@@ -70,7 +71,43 @@ export async function generateClashSub(userID, host) {
   template.replace('{{vps-server}}', '107.175.115.79')
   const ipList = parseCsv(ipCsv).slice(0, 8)
   return `
-${template.replace('{{vps-server}}', '107.175.115.79').replace('{uuid}', '195b1bf9-51d2-49bb-d5e1-7440af7eda05').replace('{{proxy-list}}', ipList.map((ipMsg) => proxyYaml(ipMsg.name, ipMsg.location, ipMsg.ip, ipMsg.port, userID, host)).join('\n'))}
+  
+${
+template
+// .replace('{{vps-server}}', '107.175.115.79')
+// .replace('{uuid}', '195b1bf9-51d2-49bb-d5e1-7440af7eda05')
+.replace('{{proxy-list}}', 
+ipList.map((ipMsg) => proxyYaml(ipMsg.name, ipMsg.location, ipMsg.ip, ipMsg.port, userID, host))
+.concat(`
+  - {
+    name: chiui,
+    server: 107.175.115.79,
+    port: 10811,
+    type: vmess,
+    uuid: 195b1bf9-51d2-49bb-d5e1-7440af7eda05,
+    alterId: 0,
+    cipher: auto,
+    tls: false,
+    network: ws,
+    ws-opts: { path: /195b1bf9 },
+  }
+  - {
+    name: WARP,
+    type: wireguard,
+    server: 162.159.193.1,
+    port: 2408,
+    ip: 172.16.0.2,
+    public-key: bmXOC+F1FxEMF9dyiK2H5/1SUtzH0JuVo51h2wPfgyo=,
+    private-key: YLP/k9mtF3Fn26xI0OTjoRmQjp6G8MCod1K7dQWzYkM=,
+    mtu: 1300,
+    udp: true,
+    remote-dns-resolve: true,
+    dns: [114.114.114.114, 1.1.1.1, 8.8.8.8],
+  }`)
+.join('\n')
+
+)
+}
 proxy-groups:
   ${groupNames.map(name => proxyGroupsYaml(name, ipList)).join('\n')}
 
