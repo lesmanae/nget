@@ -6,6 +6,9 @@ const ipListUrl = `https://mirror.ghproxy.com/https://raw.githubusercontent.com/
 
 
 function proxyYaml(name, location = 'unknown', ip, port = 443, userID, host) {
+  if(!ip){
+    return ``
+  }
   return `
   - type: vless
     name: ${name}
