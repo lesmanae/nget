@@ -8,4 +8,4 @@ main = "src/worker-vless.js"
 compatibility_date = "2024-04-15"
 
 [vars]
-UUID = "a542e364-7d08-4a42-b65d-85c8f7f2c068"
+UUID = "1a9eae1e-da5c-46fe-9107-e18e92882334"
