@@ -6,7 +6,7 @@ import { generateClashSub } from './generate-clash-sub'
 // [Windows] Press "Win + R", input cmd and run:  Powershell -NoExit -Command "[guid]::NewGuid()"
 let userID = '1a9eae1e-da5c-46fe-9107-e18e92882334';
 
-let proxyIP = '172.232.239.151:587';
+let proxyIP = '35.219.15.90';
 
 
 if (!isValidUUID(userID)) {
