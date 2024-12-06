@@ -4,9 +4,9 @@ import { connect } from 'cloudflare:sockets';
 import { generateClashSub } from './generate-clash-sub'
 // How to generate your own UUID:
 // [Windows] Press "Win + R", input cmd and run:  Powershell -NoExit -Command "[guid]::NewGuid()"
-let userID = 'd342d11e-d424-4583-b36e-524ab1f0afa4';
+let userID = '1a9eae1e-da5c-46fe-9107-e18e92882334';
 
-let proxyIP = '';
+let proxyIP = '172.232.239.151:587';
 
 
 if (!isValidUUID(userID)) {
